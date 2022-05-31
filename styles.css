@@ -1,0 +1,271 @@
+body, select, input, button {
+    font-family: 'Rubik', sans-serif;
+}
+
+body {
+    background: linear-gradient(to left, #0083bd, 40%, purple);
+}
+
+/*                         HEADER AND FOOTER CONTAINERS                */
+.header-search, .footer-route {
+    width: 100%;
+    color: white;
+    text-align: center;
+    background-color: #0083bd;
+    /* background-color: #377DFF; */
+    border-radius: 15px;
+}
+
+/*                                   FORMS                            */
+select, input, button {
+    background-color: #377DFF;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 5px;
+}
+
+select {
+    cursor: pointer;
+    width: auto;
+    outline-color: #377DFF;
+    text-align: center;
+}
+
+option {
+    background-color: white;
+    color: #377DFF;
+}
+
+select:hover, select:focus {
+    transition-duration: 0.2s;
+    border-color: #377DFF;
+    background-color: white;
+    color: #377DFF;
+}
+
+input:hover, input:focus {
+    transition-duration: 0.2s;
+    border-color: #377DFF;
+    outline-color: #377DFF;
+    background-color: white;
+    color: #377DFF;
+}
+
+input:focus {
+    cursor: none;
+}
+
+input::placeholder {
+    text-align: center;
+    color: white;
+}
+
+input:hover::placeholder, input:focus::placeholder {
+    color: #377DFF;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    transition-duration: 0.2s;
+    border-color: #377DFF;
+    background-color: white;
+    color: #377DFF;
+}
+
+button:active {
+    transform: translateY(3px);
+}
+
+/*                            HEADER-SEARCH                        */
+.header-search {
+    height: 75px;
+    margin-top: 35px;
+
+    position: relative;
+    /* top: 35px; */
+}
+
+.header-search * {
+    position: relative;
+    top: 25%;
+    height: 30px;
+}
+
+.header-search input {
+    width: 250px;
+}
+
+.header-search button {
+    margin-left: 30px;
+    width: 100px;
+}
+
+/*                            HEADER-INFO                        */
+
+.header-info * {
+    display: inline-block;
+}
+
+.logo {
+    /* position: absolute;
+    top: 0px;
+    left: 100px; */
+    position: relative;
+    top: -110px;
+    left: 6%;
+    z-index: 2;
+}
+
+.title {
+    position: absolute;
+    top: 30px;
+    left: 18vw;
+    color: white;
+    font-size: 15px;
+}
+
+.author {
+    position: absolute;
+    top: 9vh;
+    left: 80vw;
+    color: white;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+/*                            FLOOR-PICKER                        */
+
+.floorpicker {
+    display: none;
+    background-color: #0083bd;
+    border-radius: 15px;
+    width: auto;
+    position: absolute;
+    /* top: 25%; */
+    bottom: 5%;
+    z-index: 2;
+    text-align: center;
+}
+
+.floorpicker h3 {
+    color: white;
+    font-size: 15px;
+    font-weight: 100;
+}
+
+.floorpicker ol {
+    list-style: none;
+    padding: 0;
+}
+
+.floorpicker ol li {
+    margin: 10px;
+}
+
+.floorpicker ol li button {
+    font-size: 30px;
+    width: 40px;
+}
+
+.floorpicker ol li button.clicked {
+    border-color: #377DFF;
+    background-color: white;
+    color: #377DFF;
+}
+
+/*                            FLOOR-MAP                        */
+
+.floor-map {
+    /* background-color: red; */
+    position: absolute;
+    top: 110px;
+    /* bottom: 85px; */
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+/*                            ROOM-DESC                        */
+.room-desc {
+    display: none;
+    color: white;
+    /* text-align: center; */
+    background-color: #0083bd;
+    /* opacity: 50%; */
+    border-radius: 15px;
+    /* width: 100%; */
+    width: auto;
+    height: auto;
+    /* position: fixed;
+    bottom: 35px;
+    padding: 10px 0; */
+    position: absolute;
+    right: 8px;
+    left: 70%;
+    top: 169px;
+    /* bottom: 69px; */
+
+    z-index: 2;
+}
+
+.room-desc h3 {
+    text-align: center;
+}
+
+.room-desc > * {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.from-to-btns {
+    text-align: center;
+}
+
+.room-desc button {
+    height: 30px;
+    width: 100px;
+    margin-left: 15px;
+    margin-right: 15px;
+    /* margin-top: 20px; */
+    /* margin-bottom: 20px; */
+    color: white;
+}
+
+.room-desc button:hover {
+    transition-duration: 0.2s;
+    border-color: #377DFF;
+    background-color: white;
+    color: #377DFF;
+}
+
+.room-desc button:active {
+    transform: translateY(3px);
+}
+
+/*                            FOOTER-ROUTE                        */
+/* .footer-route {
+    display: none;
+    position: fixed;
+    bottom: 35px;
+    padding: 10px 0;
+}
+
+.footer-route input {
+    margin-left: 15px;
+    height: 20px;
+}
+
+.footer-route button {
+    margin-left: 15px;
+    width: 100px;
+    height: 30px;
+} */

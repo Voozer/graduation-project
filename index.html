@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="rus" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Main page of my graduation project...</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div class="header-search">
+                <select name="building-picker" required>
+                    <option selected disabled hidden>Выберите корпус...</option>
+                    <option value="ГУК А">ГУК А</option>
+                    <option value="ГУК Б">ГУК Б</option>
+                    <option value="ГУК В">ГУК В</option>
+                </select>
+                <input type="text" name="find" placeholder="Введите номер аудитории...">
+                <button name="find">Найти</button>
+            </div>
+
+            <div class="header-info">
+                <img class="logo" src="./mai.png" height="150px">
+                <h3 class="title">ИНТЕРАКТИВНАЯ <br> КАРТА <br> МАИ</h3>
+                <h5 class="author">© 2022 Ilminsky Nikita. All rights reserved.</h5>
+            </div>
+        </header>
+
+<!--карта и панелька для выбора этажа-->
+        <div class="map-and-floorpicker">
+            <div class="floorpicker">
+                <h3>Этаж</h3>
+                <ol></ol>
+                <!-- <button name="clear">Очистить маршруты...</button> -->
+            </div>
+
+            <div class="floor-map">
+                <!-- <object class="floor-svg" type="image/svg+xml" data="./svgFolder/ГУК А_3.svg"></object> -->
+            </div>
+        </div>
+
+        <footer>
+            <div class="room-desc">
+                <h3></h3>
+                <p></p>
+                <div class="from-to-btns">
+                    <button name="from">Отсюда...</button>
+                    <button name="to">Сюда...</button>
+                </div>
+            </div>
+
+            <!-- <div class="footer-route">
+                <label for="from">Построить маршрут:</label>
+                <input type="text" name="from" placeholder="Откуда...">
+                <input type="text" name="where" placeholder="Куда...">
+                <button name="route">Поехали!</button>
+                <button name="clear">Очистить...</button>
+            </div> -->
+        </footer>
+
+<!--скрипт-->
+        <!-- <script src="script.js"></script> -->
+        <script src="script.js"></script>
+    </body>
+</html>
