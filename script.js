@@ -151,9 +151,11 @@ function workWithSVG() {
     const svgObject = document.querySelector('object.floor-svg')
     const svgDocument = svgObject.contentDocument
     const svgElement = svgDocument.querySelector('svg')
-    // svgElement.style.setProperty('background-color', 'grey')
-    // svgElement.style.setProperty('height', '50%')
-    // svgElement.style.setProperty('width', '50%')
+
+    // переменные для клика и построения маршрута
+    let curRoom
+    let routeIsDrawn = false
+    let startRoom, endRoom
 
 
 
@@ -176,20 +178,23 @@ function workWithSVG() {
     // delete svgRoomsTemp
 
     // задача 2: вывод информации о помещении
-    let curRoom
-    function roomClick(svgRoom) {
+    function roomClick(clickedRoom) {
+        // если уже кликнули на другое помещение - убираем его выделение
+        // здесь curRoom - помещение, которое станет предыдущим
         if (curRoom !== undefined) {
-            curRoom.querySelector('path').style.setProperty('opacity', '0')
-            if (curRoom === svgRoom) {
+            if (!(curRoom === startRoom || curRoom === endRoom)) {
+                curRoom.querySelector('path').style.setProperty('opacity', '0')
+            }
+            if (curRoom === clickedRoom) {
                 curRoom = undefined
                 divRoomDesc.style.setProperty('display', 'none')
                 return
             }
         }
-        curRoom = svgRoom
+        curRoom = clickedRoom
         curRoom.querySelector('path').style.setProperty('opacity', '1')
         // получаем название и описание помещения
-        let roomDescription = svgRoom.querySelector('desc')
+        let roomDescription = curRoom.querySelector('desc')
         let roomName, roomInfo
         if (roomDescription !== null) {
             roomDescription = roomDescription.textContent.split('\n')
@@ -203,25 +208,45 @@ function workWithSVG() {
         divRoomDesc.style.setProperty('display', 'block')
     }
 
+    function makeRoomDefault(svgRoom) {
+        svgRoom.querySelector('path').setAttribute('style', 'fill: #0083bd; opacity: 0; transition-duration: 0.3s')
+    }
+
     // предобрабатываем схему перед тем, как показать пользователю
     for (let i of Object.keys(svgRooms)) {
         svgRooms[i].style.setProperty('cursor', 'pointer')
         svgRooms[i].style.setProperty('pointer-events', 'all')
 
-        const roomShape = svgRooms[i].querySelector('path')
         // скрываем формы помещений
-        roomShape.setAttribute('style', 'fill: #0083bd; opacity: 0; transition-duration: 0.3s')
+        makeRoomDefault(svgRooms[i])
 
+        const roomShape = svgRooms[i].querySelector('path')
         // выделяем выбранные курсором помещения
         svgRooms[i].addEventListener('mouseenter', function() {
-            if (!(curRoom === this)) {
-                roomShape.style.setProperty('opacity', '0.3')
+            if (!(this === curRoom || this === startRoom || this === endRoom)) {
+                    roomShape.style.setProperty('opacity', '0.3')
             }
+            // if (routeIsDrawn) {
+            //     if (this === startRoom || this === endRoom) {
+            //         return
+            //     }
+            // }
+            // if (!(curRoom === this)) {
+            //     roomShape.style.setProperty('opacity', '0.3')
+            // }
         })
         svgRooms[i].addEventListener('mouseleave', function() {
-            if (!(curRoom === svgRooms[i])) {
-                roomShape.style.setProperty('opacity', '0')
+            if (!(this === curRoom || this === startRoom || this === endRoom)) {
+                    roomShape.style.setProperty('opacity', '0')
             }
+            // if (routeIsDrawn) {
+            //     if (this === startRoom || this === endRoom) {
+            //         return
+            //     }
+            // }
+            // if (!(curRoom === this)) {
+            //     roomShape.style.setProperty('opacity', '0')
+            // }
         })
         svgRooms[i].addEventListener('click', () => {roomClick(svgRooms[i])})
     }
@@ -316,12 +341,6 @@ function workWithSVG() {
         } else {
             // если нашли - показываем информацию о помещении и подсвечиваем его синим
             roomClick(foundRoom)
-            // let roomShape = foundRoom.querySelector('path')
-            // roomShape.style.setProperty('fill', '#0083bd')
-            // roomShape.style.setProperty('opacity', '0.7')
-            // setTimeout(() => {
-            //     roomShape.style.setProperty('opacity', '0')
-            // }, 700)
         }
     }
 
@@ -564,7 +583,6 @@ function workWithSVG() {
         }
     }
 
-    // задача 3: построение маршрута
     // inputFrom.addEventListener('keyup', (event) => {
     //     if (event.keyCode === 13) {
     //         event.preventDefault()
@@ -579,7 +597,7 @@ function workWithSVG() {
     //     }
     // })
 
-    let paths = []
+    // let paths = []
     // function createRoute() {
     //     const startRoom = inputFrom.value.toLowerCase()
     //     const endRoom = inputWhere.value.toLowerCase()
@@ -633,7 +651,18 @@ function workWithSVG() {
     // }
     // buttonRoute.addEventListener('click', createRoute)
 
-    let startRoom, endRoom
+    // задача 3: построение маршрута
+    // случайный цвет для закрашивания маршрута
+    function getRandomColor() {
+        const redValue = Math.floor(Math.random() * 16).toString(16).repeat(2)
+        const greenValue = Math.floor(Math.random() * 16).toString(16).repeat(2)
+        const blueValue = Math.floor(Math.random() * 16).toString(16).repeat(2)
+        const randomColor = '#' + redValue + greenValue + blueValue
+        return randomColor
+    }
+    let randomColor = getRandomColor()
+
+    let paths = []
     function createRouteV2() {
         startNodeID = startRoom.querySelector('circle').getAttribute('id').slice('path'.length)
         endNodeID = endRoom.querySelector('circle').getAttribute('id').slice('path'.length)
@@ -643,10 +672,6 @@ function workWithSVG() {
         console.log("Длина пути:", routeSolution.minPathValue)
 
         // закрашиваем помещения
-        const redValue = Math.floor(Math.random() * 16).toString(16).repeat(2)
-        const greenValue = Math.floor(Math.random() * 16).toString(16).repeat(2)
-        const blueValue = Math.floor(Math.random() * 16).toString(16).repeat(2)
-        const randomColor = '#' + redValue + greenValue + blueValue
         startRoom.querySelector('path').style.setProperty('fill', randomColor)
         startRoom.querySelector('path').style.setProperty('opacity', '1')
         endRoom.querySelector('path').style.setProperty('fill', randomColor)
@@ -669,37 +694,86 @@ function workWithSVG() {
         svgEdgesLayer.appendChild(pathLine)
         paths.push(pathLine)
 
+        routeIsDrawn = true
+    }
+
+    // // версия для нескольких маршрутов
+    // function clearRoutes() {
+    //     for (let i = 0; i < paths.length; i++) {
+    //         svgEdgesLayer.removeChild(paths[i])
+    //     }
+    //     paths = []
+    //     routeIsDrawn = false
+    // }
+    // // buttonClear.addEventListener('click', clearRoutes)
+
+    function clearRoute() {
+        // возвращаем прежний стиль начальному и конечному помещениям
+        makeRoomDefault(startRoom)
+        makeRoomDefault(endRoom)
+
+        // удаляем путь
+        svgEdgesLayer.removeChild(paths[0])
+        paths = []
+        routeIsDrawn = false
         startRoom = undefined
         endRoom = undefined
-    }
 
-    function clearRoutes() {
-        for (let i = 0; i < paths.length; i++) {
-            svgEdgesLayer.removeChild(paths[i])
-        }
-        paths = []
+        // получаем новый цвет для следующего маршрута
+        randomColor = getRandomColor()
     }
-    // buttonClear.addEventListener('click', clearRoutes)
 
     buttonFrom.addEventListener('click', function() {
-        clearRoutes()
-        divRoomDesc.style.setProperty('display', 'none')
+        if (routeIsDrawn) {
+            clearRoute()
+        }
 
-        if (startRoom !== curRoom) {
-            startRoom = curRoom
-            console.log("FROM:", startRoom);
+        // если уже было выбрано другое помещение - убираем у него выделение
+        if (startRoom !== undefined) {
+            makeRoomDefault(startRoom)
+        }
+
+        startRoom = curRoom
+        console.log("FROM:", startRoom);
+
+        // закрашиваем как начальную точку
+        startRoom.querySelector('path').style.setProperty('fill', randomColor)
+        startRoom.querySelector('path').style.setProperty('opacity', '1')
+
+        divRoomDesc.style.setProperty('display', 'none')
+        curRoom = undefined
+
+        // если указали помещение как начальную и конечную точку - ставим последнее состояние
+        if (endRoom === startRoom) {
+            endRoom = undefined
         }
         if (endRoom !== undefined) {
             createRouteV2()
         }
     })
     buttonTo.addEventListener('click', function() {
-        clearRoutes()
-        divRoomDesc.style.setProperty('display', 'none')
+        if (routeIsDrawn) {
+            clearRoute()
+        }
 
-        if (endRoom !== curRoom) {
-            endRoom = curRoom
-            console.log("TO:", endRoom);
+        // если уже было выбрано другое помещение - убираем у него выделение
+        if (endRoom !== undefined) {
+            makeRoomDefault(endRoom)
+        }
+
+        endRoom = curRoom
+        console.log("TO:", endRoom);
+
+        // закрашиваем как конечную точку
+        endRoom.querySelector('path').style.setProperty('fill', randomColor)
+        endRoom.querySelector('path').style.setProperty('opacity', '1')
+
+        divRoomDesc.style.setProperty('display', 'none')
+        curRoom = undefined
+
+        // если указали помещение как начальную и конечную точку - ставим последнее состояние
+        if (startRoom === endRoom) {
+            startRoom = undefined
         }
         if (startRoom !== undefined) {
             createRouteV2()
