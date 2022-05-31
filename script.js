@@ -669,8 +669,8 @@ function workWithSVG() {
         svgEdgesLayer.appendChild(pathLine)
         paths.push(pathLine)
 
-        // startRoom = undefined
-        // endRoom = undefined
+        startRoom = undefined
+        endRoom = undefined
     }
 
     function clearRoutes() {
