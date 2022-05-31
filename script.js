@@ -22,10 +22,10 @@ function removePrevHandlers() {
     //          but if it ain't broke - don't fix it...
 
     // клонируем кнопки чтобы удалить eventHandlerы от предыдущей схемы
-    // //                  кнопка "Найти"
-    // const buttonFind_new = buttonFind.cloneNode(true)
-    // buttonFind.parentNode.replaceChild(buttonFind_new, buttonFind)
-    // buttonFind = buttonFind_new
+    //                  кнопка "Найти"
+    const buttonFind_new = buttonFind.cloneNode(true)
+    buttonFind.parentNode.replaceChild(buttonFind_new, buttonFind)
+    buttonFind = buttonFind_new
     // //                  кнопка "Поехали!"
     // const buttonRoute_new = buttonRoute.cloneNode(true)
     // buttonRoute.parentNode.replaceChild(buttonRoute_new, buttonRoute)
