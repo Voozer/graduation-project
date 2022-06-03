@@ -188,7 +188,12 @@ button:active {
     bottom: 5px;
     left: 0;
     right: 0;
-    text-align: center;
+    /* text-align: center; */
+}
+
+.floor-map .floor-svg {
+    position: absolute;
+    /* top: 0; */
 }
 
 /*                            ROOM-DESC                        */
